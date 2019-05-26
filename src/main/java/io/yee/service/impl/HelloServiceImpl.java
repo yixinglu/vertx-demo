@@ -34,7 +34,7 @@ public class HelloServiceImpl implements HelloService {
         }
         return msg + " " + name;
       })
-      .map(msg -> new JsonObject().put("msg", msg))
+      .map(msg -> new JsonObject().put("msg", msg).put("success", true))
       .map(OperationResponse::completedWithJson)
       .subscribe(SingleHelper.toObserver(resultHandler));
   }

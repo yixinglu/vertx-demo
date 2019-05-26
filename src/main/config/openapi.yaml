@@ -14,12 +14,7 @@ paths:
       summary: hello test
       operationId: hello
       parameters:
-        - name: name
-          in: query
-          required: true
-          schema:
-            type: string
-            minLength: 3
+        - $ref: '#/components/parameters/NameParam'
         - name: email
           in: query
           required: false
@@ -34,11 +29,14 @@ paths:
               schema:
                 type: object
                 required:
-                  - message
-                properties:
-                  message:
-                    type: string
-                    minLength: 1
+                  - msg
+                allOf:
+                  - $ref: '#/components/schemas/Success'
+                  - type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 3
       x-vertx-event-bus:
         method: hello
     post:
@@ -73,3 +71,18 @@ paths:
                     format: int32
       x-vertx-event-bus:
         method: add
+components:
+  parameters:
+    NameParam:
+      name: name
+      in: query
+      required: true
+      schema:
+        type: string
+        minLength: 3
+  schemas:
+    Success:
+      properties:
+        success:
+          type: boolean
+          default: true
