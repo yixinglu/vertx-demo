@@ -1,0 +1,75 @@
+openapi: 3.0.1
+info:
+  title: Sample API
+  description: API description in Markdown.
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/api'
+paths:
+  /hello:
+    x-vertx-event-bus:
+      address: service.hello
+      timeout: 1950
+    get:
+      summary: hello test
+      operationId: hello
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 3
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+            format: email
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+      x-vertx-event-bus:
+        method: hello
+    post:
+      summary: add hello object
+      operationId: add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  minLength: 3
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  length:
+                    type: integer
+                    format: int32
+      x-vertx-event-bus:
+        method: add
