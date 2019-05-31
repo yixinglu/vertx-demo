@@ -8,6 +8,7 @@ Vert.X Test
 - OpenApi `servers.url.basePath` and `Router.mountSubRouter`
 - `mountServicesFromExtensions` and `x-vertx-event-bus` (address/method)
 - `allOf`, Object and parameters `$refs` schema
+- Mount different sub routers to same mount point
 
 ## References
 

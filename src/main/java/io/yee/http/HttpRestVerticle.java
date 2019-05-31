@@ -16,7 +16,7 @@ public class HttpRestVerticle extends AbstractVerticle {
       (helloRouter, sayRouter) -> {
         Router router = Router.router(vertx);
         router.mountSubRouter("/api", helloRouter);
-        router.mountSubRouter("/say", sayRouter);
+        router.mountSubRouter("/api", sayRouter);
         return router;
       })
       .flatMap(router -> {

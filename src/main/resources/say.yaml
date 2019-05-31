@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8080/say
 paths:
-  /:
+  /say/:
     get:
       summary: say something
       operationId: say
