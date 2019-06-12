@@ -2,6 +2,7 @@ package io.yee.service.impl;
 
 import static java.util.Objects.isNull;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
@@ -34,9 +35,18 @@ public class HelloServiceImpl implements HelloService {
         }
         return msg + " " + name;
       })
-      .map(msg -> new JsonObject().put("msg", msg).put("success", true))
+      .map(msg -> new JsonObject().put("msg", msg).put("success", true).put("api", "from hello"))
       .map(OperationResponse::completedWithJson)
       .subscribe(SingleHelper.toObserver(resultHandler));
+  }
+
+  @Override
+  public void helloName(String name, OperationRequest context,
+    Handler<AsyncResult<OperationResponse>> handler) {
+    Completable.complete()
+      .toSingleDefault(new JsonObject().put("success", true).put("api", "from helloName"))
+      .map(OperationResponse::completedWithJson)
+      .subscribe(SingleHelper.toObserver(handler));
   }
 
   @Override

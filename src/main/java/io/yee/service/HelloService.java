@@ -22,4 +22,7 @@ public interface HelloService {
 
   void add(JsonObject body, OperationRequest context,
     Handler<AsyncResult<OperationResponse>> handler);
+
+  void helloName(String name, OperationRequest context,
+    Handler<AsyncResult<OperationResponse>> handler);
 }
