@@ -33,6 +33,19 @@ public class HttpRestVerticle extends AbstractVerticle {
         HttpServerOptions options = new HttpServerOptions().setHost("localhost").setPort(8080);
         return vertx.createHttpServer(options).requestHandler(router).rxListen();
       })
+      .flatMap(server -> {
+        HttpServerOptions options = new HttpServerOptions().setHost("localhost").setPort(8090);
+        Router router = Router.router(vertx);
+        router.get("/api/hello").handler(rc -> {
+          rc.response().end("hello");
+        });
+        router.get("/api/:num").handler(rc -> {
+          String num = rc.request().getParam("num");
+          int param = Integer.parseInt(num);
+          rc.response().end("num: " + param);
+        });
+        return vertx.createHttpServer(options).requestHandler(router).rxListen();
+      })
       .ignoreElement();
   }
 

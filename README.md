@@ -10,13 +10,6 @@ Vert.X Test
 - `allOf`, Object and parameters `$refs` schema
 - Mount different sub routers to same mount point
 
-## Bug
-
-Vertx Open API router could not work fine for following api definitions:
-
-- `/api/{name}` name is a string path parameter
-- `/api/hello`
-
 ## References
 
 - https://github.com/vietj/scalable-open-api-with-vertx
