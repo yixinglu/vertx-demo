@@ -40,11 +40,11 @@ public class HelloServiceImpl implements HelloService {
   }
 
   @Override
-  public void helloName(String name, OperationRequest context,
+  public void helloNum(Integer num, OperationRequest context,
     Handler<AsyncResult<OperationResponse>> handler) {
-    Single.just(name)
+    Single.just(num)
       .map(msg ->
-        new JsonObject().put("success", true).put("name", msg).put("api", "from helloName"))
+        new JsonObject().put("success", true).put("num", msg).put("api", "from helloNum"))
       .map(OperationResponse::completedWithJson)
       .subscribe(SingleHelper.toObserver(handler));
   }
