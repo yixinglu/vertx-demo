@@ -3,12 +3,17 @@ package io.yee.http;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.vertx.core.http.HttpServerOptions;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
+import io.vertx.ext.web.api.validation.ValidationException;
 import io.vertx.reactivex.core.AbstractVerticle;
 import io.vertx.reactivex.ext.web.Router;
 import io.vertx.reactivex.ext.web.RoutingContext;
 import io.vertx.reactivex.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 
 public class HttpRestVerticle extends AbstractVerticle {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(HttpRestVerticle.class);
 
   @Override
   public Completable rxStart() {
@@ -17,6 +22,11 @@ public class HttpRestVerticle extends AbstractVerticle {
         Router router = Router.router(vertx);
         router.mountSubRouter("/api", helloRouter);
         router.mountSubRouter("/api", sayRouter);
+        router.errorHandler(400, rc -> {
+          if (rc.failure() instanceof ValidationException) {
+            LOGGER.error(rc.failure());
+          }
+        });
         return router;
       })
       .flatMap(router -> {
