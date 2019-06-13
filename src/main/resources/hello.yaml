@@ -6,6 +6,23 @@ info:
 servers:
   - url: 'http://localhost:8080/api'
 paths:
+  /{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 3
+    get:
+      summary: test path parameters before hello api
+      operationId: helloName
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+      x-vertx-event-bus:
+        address: service.hello
+        method: helloName
   /hello:
     x-vertx-event-bus:
       address: service.hello
@@ -71,23 +88,6 @@ paths:
                     format: int32
       x-vertx-event-bus:
         method: add
-  /{name}:
-    parameters:
-      - name: name
-        in: path
-        required: true
-        schema:
-          type: string
-          minLength: 3
-    get:
-      summary: test path parameters before hello api
-      operationId: helloName
-      responses:
-        200:
-          $ref: '#/components/responses/Success'
-      x-vertx-event-bus:
-        address: service.hello
-        method: helloName
 components:
   responses:
     Success:
